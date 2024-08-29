@@ -1,51 +1,56 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%;">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assembly and Part Numbers</title>
+    <title>PostMessage Example</title>
     <style>
-        #messagePanel {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            background: white;
-            border: 1px solid black;
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #messages {
+            border: 1px solid #ddd;
             padding: 10px;
-            max-width: 300px;
-            max-height: 200px;
+            margin: 10px 0;
+            height: 200px;
             overflow-y: auto;
-            z-index: 1000;
         }
     </style>
 </head>
 
-<body style="height: 100%; padding: 0px; margin: 0px;">
-    <div id="messagePanel">
-        <h3>Messages:</h3>
-    </div>
-    <iframe style="border: none;" src="https://gentle-valkyrie-5b0858.netlify.app/" id="iehub-iframe" height="100%"
-        width="100%">
-    </iframe>
-</body>
-<script>
-    console.log('Script started');
+<body>
+    <h1>Message Receiver and Sender</h1>
+    <div id="messages"></div>
 
-    window.addEventListener('message', function (event) {
-        console.log('Message received:', event.data);
-        const messagePanel = document.getElementById('messagePanel');
-        if (messagePanel) {
+    <script>
+        // Display all received messages
+        const messagesDiv = document.getElementById('messages');
+
+        // Function to display a message
+        function displayMessage(message) {
             const p = document.createElement('p');
-            p.textContent = JSON.stringify(event.data);
-            messagePanel.appendChild(p);
-            console.log('Message added to panel');
-        } else {
-            console.error('messagePanel not found');
+            p.textContent = message;
+            messagesDiv.appendChild(p);
         }
-    });
 
-    console.log('Script finished');
-</script>
+        // Receive messages using postMessage
+        window.addEventListener('message', (event) => {
+            // Display the received message
+            displayMessage('Received: ' + JSON.stringify(event.data));
+        });
+
+        // Send a message using postMessage every 5 seconds
+        setInterval(() => {
+            const message = `Hello from ${new Date().toLocaleTimeString()}`;
+            window.postMessage(message, "*");
+            var op = window.opener || window.parent;
+            op.postMessage(message,"*")
+            displayMessage('Sent: ' + message);
+        }, 5000);
+    </script>
+</body>
 
 </html>
