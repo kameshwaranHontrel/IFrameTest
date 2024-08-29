@@ -25,6 +25,9 @@
     <h1>Message Receiver and Sender</h1>
     <div id="messages"></div>
 
+    <input id="messageBox" />
+    <button onclick="sendMessage(document.getElementById('messageBox').value)">Send</button>
+
     <script>
         // Display all received messages
         const messagesDiv = document.getElementById('messages');
@@ -42,13 +45,19 @@
             displayMessage('Received: ' + JSON.stringify(event.data));
         });
 
-        // Send a message using postMessage every 5 seconds
-        setInterval(() => {
-            const message = `Hello from ${new Date().toLocaleTimeString()}`;
+        // Send Message Function
+        const sendMessage = (message) => {
             window.postMessage(message, "*");
             var op = window.opener || window.parent;
             op.postMessage(message,"*")
             displayMessage('Sent: ' + message);
+        }
+
+        
+
+        // Send a message using postMessage every 5 seconds
+        setInterval(() => {
+            sendMessage(`Hello from ${new Date().toLocaleTimeString()}`);
         }, 5000);
     </script>
 </body>
