@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%;">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assembly and Part Numbers</title>
+    <style>
+        #messagePanel {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: white;
+            border: 1px solid black;
+            padding: 10px;
+            max-width: 300px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body style="height: 100%; padding: 0px; margin: 0px;">
+    <div id="messagePanel">
+        <h3>Messages:</h3>
+    </div>
+    <iframe style="border: none;" src="https://gentle-valkyrie-5b0858.netlify.app/" id="iehub-iframe" height="100%"
+        width="100%">
+    </iframe>
+</body>
+<script>
+    console.log('Script started');
+
+    window.addEventListener('message', function (event) {
+        console.log('Message received:', event.data);
+        const messagePanel = document.getElementById('messagePanel');
+        if (messagePanel) {
+            const p = document.createElement('p');
+            p.textContent = JSON.stringify(event.data);
+            messagePanel.appendChild(p);
+            console.log('Message added to panel');
+        } else {
+            console.error('messagePanel not found');
+        }
+    });
+
+    console.log('Script finished');
+</script>
+
+</html>
