@@ -52,13 +52,6 @@
             op.postMessage(message,"*")
             displayMessage('Sent: ' + message);
         }
-
-        
-
-        // Send a message using postMessage every 5 seconds
-        setInterval(() => {
-            sendMessage(`Hello from ${new Date().toLocaleTimeString()}`);
-        }, 5000);
     </script>
 </body>
 
