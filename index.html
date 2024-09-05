@@ -28,6 +28,12 @@
     <input id="messageBox" />
     <button onclick="sendMessage(document.getElementById('messageBox').value)">Send</button>
 
+    <br>
+    <button onclick="sendMessage(JSON.stringify({name: 'BOM-000100-r1'}))">BOM-000100-r1</button><br>
+    <button onclick="sendMessage(JSON.stringify({name: 'BOM-000101-r2'}))">BOM-000101-r2</button><br>
+    <button onclick="sendMessage(JSON.stringify({name: 'BOM-000102-r3'}))">BOM-000102-r3</button><br>
+    <button onclick="sendMessage(JSON.stringify({name: 'BOM-000103-r4'}))">BOM-000103-r4</button><br>
+
     <script>
         // Display all received messages
         const messagesDiv = document.getElementById('messages');
@@ -49,7 +55,7 @@
         const sendMessage = (message) => {
             window.postMessage(message, "*");
             var op = window.opener || window.parent;
-            op.postMessage(message,"*")
+            op.postMessage(message, "*")
             displayMessage('Sent: ' + message);
         }
     </script>
